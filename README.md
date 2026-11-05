@@ -1,2 +1,507 @@
 # Result-3
-For parents use 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABHINAV PUBLIC SCHOOL, SANGAM - Result Portal</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Times New Roman', Times, serif, 'Segoe UI';
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #f0f4f8;
+            padding: 15px;
+            color: #333;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 320px;
+            height: 320px;
+            background-image: url('logo.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .header, .search-box, .result-card, table, .summary-box {
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 3px solid #b91c1c;
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+        }
+        .header img {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            margin-bottom: 6px;
+            object-fit: cover;
+            border: 3px solid #eab308;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .header h2 {
+            color: #b91c1c;
+            font-size: 24px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .header .udise-text {
+            color: #000000;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .header p {
+            color: #4b5563;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .search-box {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+        }
+        .form-group {
+            margin-bottom: 12px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #4a5568;
+            font-size: 14px;
+        }
+        .required {
+            color: #e53e3e;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+        }
+        input:focus, select:focus {
+            border-color: #3182ce;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        button.btn {
+            padding: 10px 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-search { background-color: #3182ce; color: white; }
+        .btn-search:hover { background-color: #2b6cb0; }
+        .btn-print { background-color: #4a5568; color: white; }
+        .btn-print:hover { background-color: #2d3748; }
+        .btn-download { background-color: #3182ce; color: white; }
+        .btn-download:hover { background-color: #2b6cb0; }
+
+        .result-card {
+            display: none;
+            background: #ffffff;
+            border: 2px solid #000000;
+            border-radius: 6px;
+            padding: 20px;
+            margin-top: 15px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-card::before {
+            content: "";
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 280px;
+            height: 280px;
+            background-image: url('logo.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .card-header-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border-bottom: 2px solid #b91c1c;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+        }
+        .card-header-logo img {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #eab308;
+        }
+
+        .student-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 15px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #cbd5e0;
+        }
+        .info-item {
+            font-size: 14px;
+            color: #1a202c;
+            font-weight: bold;
+        }
+        .info-item span { 
+            font-weight: bold; 
+            color: #000000; 
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            padding: 8px 10px;
+            border: 1.5px solid #000000;
+            text-align: left;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        th { 
+            background-color: #f1f5f9; 
+            color: #000000; 
+            font-weight: bold; 
+            font-size: 13px;
+        }
+
+        .summary-box {
+            display: flex;
+            justify-content: space-between;
+            background: #f8fafc;
+            border: 1.5px solid #000000;
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #000000;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .signature-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 45px;
+            padding-top: 5px;
+        }
+        .sig-box {
+            text-align: center;
+            width: 200px;
+            border-top: 1.5px dashed #000000;
+            padding-top: 5px;
+            font-weight: bold;
+            font-size: 12px;
+            color: #000000;
+        }
+
+        .error-msg {
+            display: none;
+            color: #e53e3e;
+            background: #fff5f5;
+            border: 1.5px solid #fed7d7;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 10px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .pass-status { color: #166534; font-weight: bold; }
+        .fail-status { color: #b91c1c; font-weight: bold; }
+
+        @media print {
+            body { 
+                background: white; 
+                padding: 0; 
+                -webkit-print-color-adjust: exact !important; 
+                print-color-adjust: exact !important; 
+            }
+            .no-print, .search-box, .header { display: none !important; }
+            .container { box-shadow: none; max-width: 100%; padding: 0; }
+            .container::before { display: none; }
+            
+            .result-card { 
+                display: block !important; 
+                border: 2px solid #000000; 
+                box-shadow: none; 
+                page-break-inside: avoid;
+            }
+            
+            .result-card::before {
+                content: "";
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 300px;
+                height: 300px;
+                background-image: url('logo.jpg') !important;
+                background-size: contain;
+                background-repeat: no-repeat;
+                background-position: center;
+                opacity: 0.12 !important;
+                -webkit-print-color-adjust: exact;
+                z-index: 0;
+            }
+            th, td { border: 1.5px solid #000000; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <img src="logo.jpg" alt="School Logo" onerror="this.style.display='none'">
+        <h2>ABHINAV PUBLIC SCHOOL, SANGAM</h2>
+        <div class="udise-text">U-DISE No.: 27270407403</div>
+        <p>Student Result Portal</p>
+    </div>
+
+    <div id="resultTab" class="tab-content active">
+        <div class="search-box no-print">
+            <h3>📊 Search Exam Result</h3>
+            <br>
+            <div class="form-group">
+                <label for="resClassSelect">Select Class:</label>
+                <select id="resClassSelect">
+                    <option value="Class 5th Step-up" selected>Class 5th Step-up</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="resExamSelect">Select Exam:</label>
+                <select id="resExamSelect">
+                    <option value="unit1">1st Unit Test - 2026-27</option>
+                    <option value="unit2">2nd Unit Test - 2026-27</option>
+                    <option value="term1" selected>1st Term Exam - 2026-27</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="resRollInput">Roll No. <span class="required">*</span>:</label>
+                <input type="number" id="resRollInput" placeholder="e.g. 1, 2, 5...">
+            </div>
+            <div class="form-group">
+                <label for="resNameInput">Student Name <span class="required">*</span>:</label>
+                <input type="text" id="resNameInput" placeholder="e.g. More or Yashraj">
+            </div>
+            <button class="btn btn-search" onclick="searchResult()">Search Result</button>
+        </div>
+
+        <div id="resError" class="error-msg"></div>
+
+        <div id="resultCard" class="result-card">
+            <div class="card-header-logo">
+                <img src="logo.jpg" alt="School Logo" onerror="this.style.display='none'">
+                <div style="text-align: center;">
+                    <h3 style="color: #b91c1c; font-size: 18px; font-weight: bold;">ABHINAV PUBLIC SCHOOL, SANGAM</h3>
+                    <div style="color: #000; font-size: 12px; font-weight: bold;">U-DISE No.: 27270407403</div>
+                    <h4 style="color: #000; font-size: 13px; text-transform: uppercase; font-weight: bold; margin-top: 2px;">STATEMENT OF MARKS</h4>
+                </div>
+            </div>
+            
+            <div class="student-info-grid">
+                <div class="info-item">Class: <span id="outResClass"></span></div>
+                <div class="info-item">Examination: <span id="outResExam"></span></div>
+                <div class="info-item">Roll No.: <span id="outResRoll"></span></div>
+                <div class="info-item">Result Status: <span id="outResStatus"></span></div>
+                <div class="info-item" style="grid-column: span 2;">Student Name: <span id="outResName"></span></div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Max Marks</th>
+                        <th>Marks Obtained</th>
+                    </tr>
+                </thead>
+                <tbody id="marksTableBody"></tbody>
+            </table>
+
+            <div class="summary-box">
+                <div>Total Marks: <span id="outResTotal"></span> / <span id="outResMaxTotal">300</span></div>
+                <div>Percentage: <span id="outResPct"></span></div>
+            </div>
+
+            <div class="signature-container">
+                <div class="sig-box">Class Teacher's Signature</div>
+                <div class="sig-box">Principal's Signature</div>
+            </div>
+
+            <div class="btn-group no-print" style="margin-top: 25px;">
+                <button class="btn btn-print" onclick="window.print()">🖨️ Print Marksheet</button>
+                <button class="btn btn-download" onclick="window.print()">📥 Download (PDF)</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const examData = {
+        unit1: [
+            { roll: 1, name: "Bhise Gajanan Ashok", eng: 16, math: 19, mar: 18, sci: 18, sst: 10, hin: 8, total: 89, pct: "74.17%", status: "1st Class" },
+            { roll: 2, name: "Deshmukh Vedant Omprakash", eng: 16, math: 18, mar: 20, sci: 20, sst: 10, hin: 8, total: 92, pct: "76.67%", status: "Distinction" },
+            { roll: 3, name: "Kande Shubham Santosh", eng: 9, math: 11, mar: 14, sci: 18, sst: 6, hin: 7, total: 65, pct: "54.17%", status: "Pass" },
+            { roll: 4, name: "Khade Shailesh Ganesh", eng: 12, math: 17, mar: 15, sci: 17, sst: 9, hin: 12, total: 82, pct: "68.33%", status: "1st Class" },
+            { roll: 5, name: "More Yashraj Sayaji", eng: 18, math: 20, mar: 16, sci: 18, sst: 13, hin: 10, total: 95, pct: "79.17%", status: "Distinction" },
+            { roll: 6, name: "Naykode Aniket Balasaheb", eng: 13, math: 20, mar: 14, sci: 16, sst: 16, hin: 6, total: 85, pct: "70.83%", status: "1st Class" },
+            { roll: 7, name: "Phapal Shriganesh Kapil", eng: 8, math: 10, mar: 16, sci: 16, sst: 6, hin: 0, total: 56, pct: "46.67%", status: "Pass" },
+            { roll: 8, name: "Phapal Aditya Amal", eng: 0, math: 11, mar: 12, sci: 2, sst: 4, hin: 0, total: 29, pct: "24.17%", status: "Needs Improvement" },
+            { roll: 9, name: "Sapkal Govind Ashruba", eng: 8, math: 4, mar: 9, sci: 3, sst: 3, hin: 6, total: 33, pct: "27.50%", status: "Needs Improvement" },
+            { roll: 10, name: "Shinde Aditya Shivaji", eng: 6, math: 19, mar: 13, sci: 16, sst: 8, hin: 7, total: 69, pct: "57.50%", status: "Pass" },
+            { roll: 11, name: "Tidke Kartik Pratap", eng: 9, math: 10, mar: 4, sci: 8, sst: 2, hin: 4, total: 37, pct: "30.83%", status: "Needs Improvement" }
+        ],
+        unit2: [
+            { roll: 1, name: "Bhise Gajanan Ashok", eng: 17, math: 19, mar: 16, sci: 16, sst: 16, hin: 12, total: 96, pct: "80.00%", status: "Pass" },
+            { roll: 2, name: "Deshmukh Vedant Omprakash", eng: 19, math: 15, mar: 18, sci: 17, sst: 18, hin: 12, total: 99, pct: "82.50%", status: "Pass" },
+            { roll: 3, name: "Kande Shubham Santosh", eng: 10, math: 17, mar: 11, sci: 11, sst: 10, hin: 17, total: 76, pct: "63.33%", status: "Pass" },
+            { roll: 4, name: "Khade Shailesh Ganesh", eng: 17, math: 15, mar: 17, sci: 12, sst: 18, hin: 14, total: 93, pct: "77.50%", status: "Pass" },
+            { roll: 5, name: "More Yashraj Sayali", eng: 20, math: 19, mar: 16, sci: 15, sst: 16, hin: 20, total: 106, pct: "88.33%", status: "Pass" },
+            { roll: 6, name: "Naykode Aniket Balasaheb", eng: 16, math: 20, mar: 17, sci: 12, sst: 9, hin: 8, total: 82, pct: "68.33%", status: "Pass" },
+            { roll: 7, name: "Phapal Shriganesh Kapil", eng: 11, math: 11, mar: 7, sci: 7, sst: 8, hin: 14, total: 58, pct: "48.33%", status: "Pass" },
+            { roll: 8, name: "Phapal Aditya Amol", eng: 10, math: 6, mar: 8, sci: 5, sst: 4, hin: 10, total: 43, pct: "35.83%", status: "Pass" },
+            { roll: 9, name: "Sapkal Govind Ashruba", eng: 8, math: 9, mar: 4, sci: 4, sst: 6, hin: 9, total: 40, pct: "33.33%", status: "Needs Improvement" },
+            { roll: 10, name: "Shinde Aditya Shivaji", eng: 14, math: 13, mar: 13, sci: 6, sst: 14, hin: 18, total: 78, pct: "65.00%", status: "Pass" },
+            { roll: 11, name: "Tidke Kartik Pratap", eng: 6, math: 8, mar: 0, sci: 6, sst: 3, hin: 10, total: 33, pct: "27.50%", status: "Needs Improvement" },
+            { roll: 12, name: "Sable Shivam Bhagvat", eng: 16, math: 20, mar: 12, sci: 15, sst: 10, hin: 20, total: 93, pct: "77.50%", status: "Pass" }
+        ],
+        term1: [
+            { roll: 1, name: "Bhise Gajanan Ashok", eng: 47, math: 33, mar: 44, sci: 28, sst: 37, hin: 30, total: 219, pct: "73.00%", status: "1st Class" },
+            { roll: 2, name: "Deshmukh Vedant Omprakash", eng: 43, math: 32, mar: 47, sci: 24, sst: 50, hin: 27, total: 223, pct: "74.33%", status: "1st Class" },
+            { roll: 3, name: "Kande Shubham Santosh", eng: 39, math: 27, mar: 34, sci: 27, sst: 28, hin: 32, total: 187, pct: "62.33%", status: "Pass" },
+            { roll: 4, name: "Khade Shailesh Ganesh", eng: 44, math: 34, mar: 39, sci: 31, sst: 46, hin: 24, total: 218, pct: "72.67%", status: "1st Class" },
+            { roll: 5, name: "More Yashraj Sayali", eng: 46, math: 40, mar: 42, sci: 36, sst: 42, hin: 40, total: 246, pct: "82.00%", status: "Distinction" },
+            { roll: 6, name: "Naykode Aniket Balasaheb", eng: 41, math: 49, mar: 39, sci: 31, sst: 44, hin: 30, total: 234, pct: "78.00%", status: "1st Class" },
+            { roll: 7, name: "Phapal Shriganesh Kapil", eng: 31, math: 22, mar: 36, sci: 23, sst: 30, hin: 34, total: 176, pct: "58.67%", status: "Pass" },
+            { roll: 8, name: "Phapal Aditya Amol", eng: 21, math: 18, mar: 33, sci: 24, sst: 25, hin: 25, total: 146, pct: "48.67%", status: "Pass" },
+            { roll: 9, name: "Sapkal Govind Ashruba", eng: 16, math: 20, mar: 38, sci: 21, sst: 20, hin: 22, total: 137, pct: "45.67%", status: "Pass" },
+            { roll: 10, name: "Shinde Aditya Shivaji", eng: 33, math: 35, mar: 36, sci: 26, sst: 39, hin: 40, total: 209, pct: "69.67%", status: "1st Class" },
+            { roll: 11, name: "Tidke Kartik Pratap", eng: 0, math: 0, mar: 0, sci: 0, sst: 0, hin: 0, total: 0, pct: "0.00%", status: "Absent" },
+            { roll: 12, name: "Sable Shivam Bhagvat", eng: 0, math: 0, mar: 0, sci: 0, sst: 0, hin: 0, total: 0, pct: "0.00%", status: "Absent" }
+        ]
+    };
+
+    function searchResult() {
+        const selectedClass = document.getElementById('resClassSelect').value;
+        const examType = document.getElementById('resExamSelect').value;
+        const roll = document.getElementById('resRollInput').value.trim();
+        const name = document.getElementById('resNameInput').value.trim().toLowerCase();
+
+        const errorDiv = document.getElementById('resError');
+        const card = document.getElementById('resultCard');
+
+        errorDiv.style.display = 'none';
+        card.style.display = 'none';
+
+        if (!roll || !name) {
+            errorDiv.innerText = "⚠️ Please enter both Roll Number and Student Name.";
+            errorDiv.style.display = 'block';
+            return;
+        }
+
+        const dataset = examData[examType];
+        const student = dataset.find(s => s.roll == parseInt(roll) && s.name.toLowerCase().includes(name));
+
+        if (student) {
+            document.getElementById('outResClass').innerText = selectedClass;
+            
+            let examNameStr = '1st Unit Test';
+            let maxSubjectMark = 20;
+            let maxTotalMark = 120;
+
+            if (examType === 'unit2') {
+                examNameStr = '2nd Unit Test';
+            } else if (examType === 'term1') {
+                examNameStr = '1st Term Exam - 2026-27';
+                maxSubjectMark = 50;
+                maxTotalMark = 300;
+            }
+
+            document.getElementById('outResExam').innerText = examNameStr;
+            document.getElementById('outResRoll').innerText = student.roll;
+            document.getElementById('outResName').innerText = student.name;
+            document.getElementById('outResMaxTotal').innerText = maxTotalMark;
+            
+            const statusElem = document.getElementById('outResStatus');
+            statusElem.innerText = student.status;
+            statusElem.className = (student.status.includes('Needs') || student.status.includes('Fail') || student.status.includes('Absent')) ? 'fail-status' : 'pass-status';
+
+            document.getElementById('marksTableBody').innerHTML = `
+                <tr><td>English</td><td>${maxSubjectMark}</td><td>${student.eng === 0 && student.status === 'Absent' ? 'AB' : student.eng}</td></tr>
+                <tr><td>Mathematics</td><td>${maxSubjectMark}</td><td>${student.math === 0 && student.status === 'Absent' ? 'AB' : student.math}</td></tr>
+                <tr><td>Marathi</td><td>${maxSubjectMark}</td><td>${student.mar === 0 && student.status === 'Absent' ? 'AB' : student.mar}</td></tr>
+                <tr><td>Science</td><td>${maxSubjectMark}</td><td>${student.sci === 0 && student.status === 'Absent' ? 'AB' : student.sci}</td></tr>
+                <tr><td>Social Studies (S.S.T)</td><td>${maxSubjectMark}</td><td>${student.sst === 0 && student.status === 'Absent' ? 'AB' : student.sst}</td></tr>
+                <tr><td>Hindi</td><td>${maxSubjectMark}</td><td>${student.hin === 0 && student.status === 'Absent' ? 'AB' : student.hin}</td></tr>
+            `;
+
+            document.getElementById('outResTotal').innerText = student.total;
+            document.getElementById('outResPct').innerText = student.pct;
+
+            card.style.display = 'block';
+        } else {
+            errorDiv.innerText = "❌ No result found matching the entered Roll Number and Name.";
+            errorDiv.style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>
